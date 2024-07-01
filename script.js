@@ -106,16 +106,20 @@ let pontuacao = 0;
 let nome = '';
 
 function iniciarQuiz() {
-  nome = document.getElementById('nome').value;
-  const turma = document.getElementById('turma').value;
+  const nomeInput = document.getElementById('nome');
+  const turmaInput = document.getElementById('turma');
 
-  if (nome && turma) {
+  const nomeValido = validarNome(nomeInput.value);
+  const turmaValida = validarTurma(turmaInput.value);
+
+  if (nomeValido && turmaValida) { // Verifica se ambos os campos são válidos
+    nome = nomeInput.value;
     document.getElementById('inicio').style.display = 'none';
     document.getElementById('quiz').style.display = 'block';
-
     exibirPergunta(indicePerguntaAtual);
   } else {
-    alert('Por favor, preencha todos os campos!');
+    // Mensagens de erro mais específicas podem ser adicionadas aqui
+    alert('Por favor, preencha os campos corretamente!'); 
   }
 }
 
