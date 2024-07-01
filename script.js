@@ -124,12 +124,11 @@ function iniciarQuiz() {
 
 function validarNome(nome) {
   const regexNome = /^[A-Za-zÀ-ÿ\s]{2,50}$/; // Permite letras, espaços e acentos, de 2 a 50 caracteres
-  return regexNome.test(nome);
+  return regexNome.test(nome.trim());
 }
 
 function validarTurma(turma) {
-  const regexTurma = /^[A-Za-z0-9]{1,4}$/; // Permite letras e números, de 1 a 4 caracteres
-  return regexTurma.test(turma);
+  return /^(1B|1-B|01B|01-B)$/i.test(turma.trim());
 }
 
 function exibirPergunta(indicePergunta) {
@@ -139,7 +138,7 @@ function exibirPergunta(indicePergunta) {
   }
 
   const divPerguntas = document.getElementById('perguntas');
-  divPerguntas.innerHTML = ''; // Limpa as perguntas anteriores
+  divPerguntas.innerHTML = '';
 
   const perguntaAtual = perguntas[indicePergunta];
   const textoPergunta = perguntaAtual.pergunta;
@@ -150,85 +149,28 @@ function exibirPergunta(indicePergunta) {
   h2Pergunta.textContent = textoPergunta;
   divPergunta.appendChild(h2Pergunta);
 
-  for (let i = 0; i < alternativas.length; i++) {
-      const divAlternativa = document.createElement('div');
-      const inputRadio = document.createElement('input');
-      inputRadio.type = 'radio';
-      inputRadio.id = `alternativa-${i}`;
-      inputRadio.name = 'alternativa';
-      inputRadio.value = alternativas[i];
+  alternativas.forEach((alternativa, i) => {
+    const divAlternativa = document.createElement('div');
+    const inputRadio = document.createElement('input');
+    inputRadio.type = 'radio';
+    inputRadio.id = `alternativa-${i}`;
+    inputRadio.name = 'alternativa';
+    inputRadio.value = alternativa;
 
-      // Adicionando o event listener ao inputRadio dentro do loop
-      inputRadio.addEventListener('click', () => {
-          verificarResposta(inputRadio);
-      });
+    inputRadio.addEventListener('click', () => {
+      verificarResposta(inputRadio);
+    });
 
-      const labelAlternativa = document.createElement('label');
-      labelAlternativa.textContent = alternativas[i];
-      labelAlternativa.htmlFor = `alternativa-${i}`;
+    const labelAlternativa = document.createElement('label');
+    labelAlternativa.textContent = alternativa;
+    labelAlternativa.htmlFor = `alternativa-${i}`;
 
-      divAlternativa.appendChild(inputRadio);
-      divAlternativa.appendChild(labelAlternativa);
-      divPergunta.appendChild(divAlternativa);
-  }
-
-  divPerguntas.appendChild(divPergunta);
-}
-
-function exibirPergunta(indicePergunta) {
-  if (indicePergunta >= perguntas.length) {
-      finalizarQuiz();
-      return;
-  }
-
-  const divPerguntas = document.getElementById('perguntas');
-  divPerguntas.innerHTML = ''; // Limpa as perguntas anteriores
-
-  const perguntaAtual = perguntas[indicePergunta];
-  const textoPergunta = perguntaAtual.pergunta;
-  const alternativas = perguntaAtual.alternativas;
-
-  const divPergunta = document.createElement('div');
-  const h2Pergunta = document.createElement('h2');
-  h2Pergunta.textContent = textoPergunta;
-  divPergunta.appendChild(h2Pergunta);
-
-  for (let i = 0; i < alternativas.length; i++) {
-      const divAlternativa = document.createElement('div');
-      const inputRadio = document.createElement('input');
-      inputRadio.type = 'radio';
-      inputRadio.id = `alternativa-${i}`;
-      inputRadio.name = 'alternativa';
-      inputRadio.value = alternativas[i];
-
-      // Adicionando o event listener ao inputRadio dentro do loop
-      inputRadio.addEventListener('click', () => {
-          verificarResposta(inputRadio);
-      });
-
-      const labelAlternativa = document.createElement('label');
-      labelAlternativa.textContent = alternativas[i];
-      labelAlternativa.htmlFor = `alternativa-${i}`;
-
-      divAlternativa.appendChild(inputRadio);
-      divAlternativa.appendChild(labelAlternativa);
-      divPergunta.appendChild(divAlternativa);
-  }
+    divAlternativa.appendChild(inputRadio);
+    divAlternativa.appendChild(labelAlternativa);
+    divPergunta.appendChild(divAlternativa);
+  });
 
   divPerguntas.appendChild(divPergunta);
-}
-
-document.getElementById('perguntas').addEventListener('click', (event) => {
-if (event.target.tagName === 'INPUT' && event.target.type === 'radio') {
-  verificarResposta(event.target);
-}
-});
-
-
-function mostrarFeedback(mensagem, isCorrect) {
-  const feedbackDiv = document.getElementById('feedback');
-  feedbackDiv.textContent = mensagem;
-  feedbackDiv.className = isCorrect ? 'feedback-correct' : 'feedback-wrong';
 }
 
 function verificarResposta(inputSelecionado) {
@@ -245,7 +187,13 @@ function verificarResposta(inputSelecionado) {
   document.getElementById('botaoAvancar').disabled = false;
 }
 
-document.getElementById('botaoAvancar').addEventListener('click', function() {
+function mostrarFeedback(mensagem, isCorrect) {
+  const feedbackDiv = document.getElementById('feedback');
+  feedbackDiv.textContent = mensagem;
+  feedbackDiv.className = isCorrect ? 'feedback-correct' : 'feedback-wrong';
+}
+
+document.getElementById('botaoAvancar').addEventListener('click', () => {
   indicePerguntaAtual++;
   if (indicePerguntaAtual < perguntas.length) {
     exibirPergunta(indicePerguntaAtual);
@@ -256,8 +204,20 @@ document.getElementById('botaoAvancar').addEventListener('click', function() {
 });
 
 function finalizarQuiz() {
-  const feedbackDiv = document.getElementById('feedback');
-  feedbackDiv.textContent = `Parabéns ${nome}! Você concluiu o quiz com: ${pontuacao} pontos.`;
-  feedbackDiv.className = '';
-  document.getElementById('perguntas').style.display = 'none';
+  document.getElementById('quiz').style.display = 'none';
+  const feedbackDiv = document.getElementById('resultado');
+  document.getElementById('mensagemFinal').textContent = `Você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
+  feedbackDiv.style.display = 'block';
+  
+  if (pontuacao / perguntas.length >= 0.7) {
+    document.getElementById('mensagemFinal').textContent += ` Parabéns, seu percentual é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
+
+    // Adicione aqui a animação de confetes
+    confetti({
+        particleCount: 150,
+        spread: 180,
+        origin: { y: 0.6 }
+    });
+  }
 }
+
