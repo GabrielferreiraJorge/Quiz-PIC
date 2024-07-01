@@ -139,7 +139,7 @@ function exibirPergunta(indicePergunta) {
   }
 
   const divPerguntas = document.getElementById('perguntas');
-  divPerguntas.innerHTML = '';
+  divPerguntas.innerHTML = ''; // Limpa as perguntas anteriores
 
   const perguntaAtual = perguntas[indicePergunta];
   const textoPergunta = perguntaAtual.pergunta;
@@ -169,7 +169,6 @@ function exibirPergunta(indicePergunta) {
 
   divPerguntas.appendChild(divPergunta);
 
-  // Movendo o eventListener para fora do bloco if
   document.getElementById('perguntas').addEventListener('click', (event) => {
       if (event.target.tagName === 'INPUT' && event.target.type === 'radio') {
           verificarResposta(event.target);
@@ -213,6 +212,7 @@ function exibirPergunta(indicePergunta) {
       verificarResposta(event.target);
     }
   });
+
 
 function mostrarFeedback(mensagem, isCorrect) {
   const feedbackDiv = document.getElementById('feedback');
