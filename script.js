@@ -134,8 +134,8 @@ function validarTurma(turma) {
 
 function exibirPergunta(indicePergunta) {
   if (indicePergunta >= perguntas.length) {
-      finalizarQuiz();
-      return;
+    finalizarQuiz();
+    return;
   }
 
   const divPerguntas = document.getElementById('perguntas');
@@ -151,29 +151,28 @@ function exibirPergunta(indicePergunta) {
   divPergunta.appendChild(h2Pergunta);
 
   for (let i = 0; i < alternativas.length; i++) {
-      const divAlternativa = document.createElement('div');
-      const inputRadio = document.createElement('input');
-      inputRadio.type = 'radio';
-      inputRadio.id = `alternativa-${i}`;
-      inputRadio.name = 'alternativa';
-      inputRadio.value = alternativas[i];
+    const divAlternativa = document.createElement('div');
+    const inputRadio = document.createElement('input');
+    inputRadio.type = 'radio';
+    inputRadio.id = `alternativa-${i}`;
+    inputRadio.name = 'alternativa';
+    inputRadio.value = alternativas[i];
 
-      const labelAlternativa = document.createElement('label');
-      labelAlternativa.textContent = alternativas[i];
-      labelAlternativa.htmlFor = `alternativa-${i}`;
+    // Adicionando o event listener ao inputRadio
+    inputRadio.addEventListener('click', () => {
+      verificarResposta(inputRadio);
+    });
 
-      divAlternativa.appendChild(inputRadio);
-      divAlternativa.appendChild(labelAlternativa);
-      divPergunta.appendChild(divAlternativa);
+    const labelAlternativa = document.createElement('label');
+    labelAlternativa.textContent = alternativas[i];
+    labelAlternativa.htmlFor = `alternativa-${i}`;
+
+    divAlternativa.appendChild(inputRadio);
+    divAlternativa.appendChild(labelAlternativa);
+    divPergunta.appendChild(divAlternativa);
   }
 
   divPerguntas.appendChild(divPergunta);
-
-  document.getElementById('perguntas').addEventListener('click', (event) => {
-      if (event.target.tagName === 'INPUT' && event.target.type === 'radio') {
-          verificarResposta(event.target);
-      }
-  });
 }
 
   const divPerguntas = document.getElementById('perguntas');
