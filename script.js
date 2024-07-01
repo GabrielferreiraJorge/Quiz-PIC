@@ -134,14 +134,48 @@ function validarTurma(turma) {
 
 function exibirPergunta(indicePergunta) {
   if (indicePergunta >= perguntas.length) {
-    finalizarQuiz();
-    return;
-    document.getElementById('perguntas').addEventListener('click', (event) => {
-      if (event.target.tagName === 'INPUT' && event.target.type === 'radio') {
-        verificarResposta(event.target);
-      }
-    });
+      finalizarQuiz();
+      return;
   }
+
+  const divPerguntas = document.getElementById('perguntas');
+  divPerguntas.innerHTML = '';
+
+  const perguntaAtual = perguntas[indicePergunta];
+  const textoPergunta = perguntaAtual.pergunta;
+  const alternativas = perguntaAtual.alternativas;
+
+  const divPergunta = document.createElement('div');
+  const h2Pergunta = document.createElement('h2');
+  h2Pergunta.textContent = textoPergunta;
+  divPergunta.appendChild(h2Pergunta);
+
+  for (let i = 0; i < alternativas.length; i++) {
+      const divAlternativa = document.createElement('div');
+      const inputRadio = document.createElement('input');
+      inputRadio.type = 'radio';
+      inputRadio.id = `alternativa-${i}`;
+      inputRadio.name = 'alternativa';
+      inputRadio.value = alternativas[i];
+
+      const labelAlternativa = document.createElement('label');
+      labelAlternativa.textContent = alternativas[i];
+      labelAlternativa.htmlFor = `alternativa-${i}`;
+
+      divAlternativa.appendChild(inputRadio);
+      divAlternativa.appendChild(labelAlternativa);
+      divPergunta.appendChild(divAlternativa);
+  }
+
+  divPerguntas.appendChild(divPergunta);
+
+  // Movendo o eventListener para fora do bloco if
+  document.getElementById('perguntas').addEventListener('click', (event) => {
+      if (event.target.tagName === 'INPUT' && event.target.type === 'radio') {
+          verificarResposta(event.target);
+      }
+  });
+}
 
   const divPerguntas = document.getElementById('perguntas');
   divPerguntas.innerHTML = '';
@@ -179,7 +213,6 @@ function exibirPergunta(indicePergunta) {
       verificarResposta(event.target);
     }
   });
-}
 
 function mostrarFeedback(mensagem, isCorrect) {
   const feedbackDiv = document.getElementById('feedback');
