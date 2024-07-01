@@ -112,21 +112,35 @@ function iniciarQuiz() {
   const nomeValido = validarNome(nomeInput.value);
   const turmaValida = validarTurma(turmaInput.value);
 
-  if (nomeValido && turmaValida) { // Verifica se ambos os campos são válidos
+  if (nomeValido && turmaValida) {
     nome = nomeInput.value;
     document.getElementById('inicio').style.display = 'none';
     document.getElementById('quiz').style.display = 'block';
     exibirPergunta(indicePerguntaAtual);
   } else {
-    // Mensagens de erro mais específicas podem ser adicionadas aqui
-    alert('Por favor, preencha os campos corretamente!'); 
+    alert('Por favor, preencha os campos corretamente!');
   }
+}
+
+function validarNome(nome) {
+  const regexNome = /^[A-Za-zÀ-ÿ\s]{2,50}$/; // Permite letras, espaços e acentos, de 2 a 50 caracteres
+  return regexNome.test(nome);
+}
+
+function validarTurma(turma) {
+  const regexTurma = /^[A-Za-z0-9]{1,4}$/; // Permite letras e números, de 1 a 4 caracteres
+  return regexTurma.test(turma);
 }
 
 function exibirPergunta(indicePergunta) {
   if (indicePergunta >= perguntas.length) {
     finalizarQuiz();
     return;
+    document.getElementById('perguntas').addEventListener('click', (event) => {
+      if (event.target.tagName === 'INPUT' && event.target.type === 'radio') {
+        verificarResposta(event.target);
+      }
+    });
   }
 
   const divPerguntas = document.getElementById('perguntas');
