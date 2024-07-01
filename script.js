@@ -210,7 +210,7 @@ function finalizarQuiz() {
   mensagemFinal.textContent = `Você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
   
   if (pontuacao / perguntas.length >= 0.7) {
-      mensagemFinal.textContent += ` Parabéns, seu percentual é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
+      mensagemFinal.textContent += ` Parabéns, seu total de acertos é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
       confetti({
           particleCount: 150,
           spread: 180,
