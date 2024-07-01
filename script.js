@@ -236,19 +236,24 @@ function verificarResposta(inputSelecionado) {
   const respostaCorreta = perguntas[indicePerguntaAtual].respostaCorreta;
 
   if (respostaSelecionada === respostaCorreta) {
-    pontuacao++;
     mostrarFeedback('Resposta Certa!', true);
+    pontuacao++;
   } else {
     mostrarFeedback('Resposta Errada!', false);
   }
 
+  document.getElementById('botaoAvancar').disabled = false;
+}
+
+document.getElementById('botaoAvancar').addEventListener('click', function() {
   indicePerguntaAtual++;
   if (indicePerguntaAtual < perguntas.length) {
     exibirPergunta(indicePerguntaAtual);
+    document.getElementById('botaoAvancar').disabled = true;
   } else {
     finalizarQuiz();
   }
-}
+});
 
 function finalizarQuiz() {
   const feedbackDiv = document.getElementById('feedback');
