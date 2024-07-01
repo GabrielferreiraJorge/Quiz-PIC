@@ -128,7 +128,7 @@ function validarNome(nome) {
 }
 
 function validarTurma(turma) {
-  return /^(1B|1-B|01B|01-B)$/i.test(turma.trim());
+  return /^(0?1[-]?[Bb])$/.test(turma.trim());
 }
 
 function exibirPergunta(indicePergunta) {
