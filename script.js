@@ -178,10 +178,7 @@ function verificarResposta(inputSelecionado) {
   const respostaCorreta = perguntas[indicePerguntaAtual].respostaCorreta;
 
   if (respostaSelecionada === respostaCorreta) {
-    mostrarFeedback('Resposta Certa!', true);
-    pontuacao++;
-  } else {
-    mostrarFeedback('Resposta Errada!', false);
+      pontuacao++;
   }
 
   document.getElementById('botaoAvancar').disabled = false;
@@ -206,18 +203,36 @@ document.getElementById('botaoAvancar').addEventListener('click', () => {
 function finalizarQuiz() {
   document.getElementById('quiz').style.display = 'none';
   const feedbackDiv = document.getElementById('resultado');
-  document.getElementById('mensagemFinal').textContent = `Você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
-  feedbackDiv.style.display = 'block';
+  const mensagemFinal = document.getElementById('mensagemFinal');
+  
+  mensagemFinal.textContent = `Você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
   
   if (pontuacao / perguntas.length >= 0.7) {
-    document.getElementById('mensagemFinal').textContent += ` Parabéns, seu percentual é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
-
-    // Adicione aqui a animação de confetes
-    confetti({
-        particleCount: 150,
-        spread: 180,
-        origin: { y: 0.6 }
-    });
+      mensagemFinal.textContent += ` Parabéns, seu percentual é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
+      confetti({
+          particleCount: 150,
+          spread: 180,
+          origin: { y: 0.6 }
+      });
   }
+  
+  feedbackDiv.style.display = 'block';
 }
+
+document.getElementById('tentarNovamente').addEventListener('click', () => {
+  indicePerguntaAtual = 0;
+  pontuacao = 0;
+  document.getElementById('resultado').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  exibirPergunta(indicePerguntaAtual);
+});
+
+document.getElementById('reiniciar').addEventListener('click', () => {
+  indicePerguntaAtual = 0;
+  pontuacao = 0;
+  document.getElementById('resultado').style.display = 'none';
+  document.getElementById('inicio').style.display = 'block';
+});
+
+
 
