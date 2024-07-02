@@ -124,13 +124,13 @@ function iniciarQuiz() {
 
 function validarNome(nome) {
   // Permite letras, espaços e acentos, de 2 a 50 caracteres
-  //const regexNome = /^[A-Za-zÀ-ÿ\s]{2,50}$/;
+  const regexNome = /^[A-Za-zÀ-ÿ\s]{2,50}$/;
   return regexNome.test(nome.trim());
 }
 
 function validarTurma(turma) {
   // Permite '1B', '1b', '01B', '01b', '1-B', '1-b', '01-B', '01-b'
-  //return /^(0?1[-]?[Bb])$/.test(turma.trim());
+  return /^(0?1[-]?[Bb])$/.test(turma.trim());
 }
 
 function exibirPergunta(indicePergunta) {
