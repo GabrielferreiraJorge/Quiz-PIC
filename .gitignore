@@ -1,0 +1,41 @@
+# Arquivos gerados automaticamente
+node_modules/
+dist/
+coverage/
+.cache/
+npm-debug.log
+yarn-lock.json
+
+# Arquivos temporários
+tmp/
+*.tmp
+*.log
+
+# IDE e arquivos de configuração do editor
+.idea/
+.vscode/
+.editorconfig
+.eslintcache
+
+# Arquivos de teste
+*.spec.js
+*.spec.ts
+*.test.js
+*.test.ts
+
+# Documentação
+docs/
+*.md
+
+# Arquivos de ambiente de desenvolvimento
+.env
+.env.development
+.env.production
+
+# Arquivos de banco de dados
+db/
+*.sql
+*.sqlite
+
+# Arquivos específicos do sistema operacional
+*.DS_Store
