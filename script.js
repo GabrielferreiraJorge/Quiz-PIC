@@ -130,8 +130,10 @@ function validarNome(nome) {
 
 function validarTurma(turma) {
   // Permite '1B', '1b', '01B', '01b', '1-B', '1-b', '01-B', '01-b'
-  return /^(0?1[-]?[Bb])$/.test(turma.trim());
+  // E também '2B', '10B', '99B', etc.
+  return /^([1-9]|[1-9][0-9])[-]?[Bb]$/.test(turma.trim());
 }
+
 
 function exibirPergunta(indicePergunta) {
   if (indicePergunta >= perguntas.length) {
