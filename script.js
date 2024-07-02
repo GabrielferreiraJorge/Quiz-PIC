@@ -130,7 +130,7 @@ function validarNome(nome) {
 
 function validarTurma(turma) {
   // Permite '1B', '1b', '01B', '01b', '1-B', '1-b', '01-B', '01-b', e variações de 2 a 99
-  return /^([1-9]|[1-9][0-9])[-]?[Bb]$/.test(turma.trim());
+  return /^([1-9]|[1-9][0-9])[-]?[A-Ea-e]$/.test(turma.trim());
 }
 
 
