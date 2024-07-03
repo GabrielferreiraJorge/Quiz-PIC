@@ -11,12 +11,13 @@ body {
 }
 
 #fundo {
+  align-items: center;
   padding: 20px;
   background-color: rgb(143, 15, 143);
   border-radius: 10px;
   text-align: center;
   width: 80%;
-  max-width: 600px;
+  max-width: 800px;
   box-shadow: 0 0 10px 5px rgba(81, 0, 128, 0.3), 0 0 15px 10px rgba(215, 15, 255, 0.8);
 }
 
