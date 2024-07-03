@@ -16,6 +16,8 @@ body {
   background-color: rgb(143, 15, 143);
   border-radius: 10px;
   max-width: 500px;
+  margin-left: 50px;
+  margin-right: 50px;
   box-shadow: 0 0 10px 5px rgba(81, 0, 128, 0.3), 0 0 15px 10px rgba(215, 15, 255, 0.8);
 }
 
