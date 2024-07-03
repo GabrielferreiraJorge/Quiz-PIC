@@ -8,30 +8,30 @@
 <body>
   <main>
     <h1>Quiz Pic</h1>
+  <div class="fundo">
+      <section id="inicio">
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" name="nome">
 
-    <section id="inicio">
-      <label for="nome">Nome Completo:</label>
-      <input type="text" id="nome" name="nome">
+        <label for="turma">Turma:</label>
+        <input type="text" id="turma" name="turma"><br>
 
-      <label for="turma">Turma:</label>
-      <input type="text" id="turma" name="turma"><br>
+        <button type="button" id="iniciar" onclick="iniciarQuiz()" aria-label="Iniciar Quiz">Iniciar Quiz</button>
+      </section>
 
-      <button type="button" id="iniciar" onclick="iniciarQuiz()" aria-label="Iniciar Quiz">Iniciar Quiz</button>
-    </section>
-
-    <section id="quiz" style="display: none;">
-      <section id="perguntas"></section>
-      <section id="feedback" role="alert" aria-live="assertive"></section>
-      <button type="button" id="botaoAvancar" disabled>Avançar</button> <!-- Botão Avançar -->
-    </section>
+      <section id="quiz" style="display: none;">
+        <section id="perguntas"></section>
+        <section id="feedback" role="alert" aria-live="assertive"></section>
+        <button type="button" id="botaoAvancar" disabled>Avançar</button> <!-- Botão Avançar -->
+      </section>
 
 
-    <section id="resultado" style="display: none;">
-      <p id="mensagemFinal"></p>
-      <button type="button" id="tentarNovamente">Tentar Novamente</button>
-      <button type="button" id="reiniciar">Finalizar</button>
-    </section>
-
+      <section id="resultado" style="display: none;">
+        <p id="mensagemFinal"></p>
+        <button type="button" id="tentarNovamente">Tentar Novamente</button>
+        <button type="button" id="reiniciar">Finalizar</button>
+      </section>
+  </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.min.js"></script>
 
   </main>
