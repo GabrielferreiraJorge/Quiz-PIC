@@ -21,7 +21,7 @@ body {
   box-shadow: 0 0 10px 5px rgba(81, 0, 128, 0.3), 0 0 15px 10px rgba(215, 15, 255, 0.8);
 }
 
-#iniciar {
+button {
   width: 150px;
   padding: 10px;
   margin-top: 20px;
@@ -35,7 +35,7 @@ body {
   box-shadow: 0 0 10px 5px rgba(110, 0, 110, 0.3), 0 0 15px 10px rgba(187, 15, 164, 0.8);
 }
 
-#iniciar:hover {
+button:hover {
   background-color: rgb(3, 142, 223);
   box-shadow: 0 4px 10px rgba(110, 0, 110, 0.3);
 }
@@ -97,7 +97,7 @@ input[type="text"] {
   border-radius: 5px;
 }
 
-#botaoAvancar {
+button {
   margin-top: 20px;
   width: 150px;
   padding: 10px;
@@ -107,7 +107,7 @@ input[type="text"] {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-#botaoAvancar-container {
+button {
   display: flex;
   justify-content: center;
   width: 100%;
