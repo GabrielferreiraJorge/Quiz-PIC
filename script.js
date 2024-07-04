@@ -173,6 +173,7 @@ function exibirPergunta(indicePergunta) {
   });
 
   divPerguntas.appendChild(divPergunta);
+  desabilitarBotaoAvancar();
 }
 
 function verificarResposta(inputSelecionado) {
