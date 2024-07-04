@@ -103,6 +103,8 @@ button#reiniciar, button#tentarNovamente {
   color: white;
   font-size: 16px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 
 button#reiniciar:hover, button#tentarNovamente:hover {

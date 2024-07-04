@@ -230,10 +230,6 @@ function finalizarQuiz() {
 
   respostasUsuario.forEach(resposta => {
     const divResposta = document.createElement('div');
-    const pPergunta = document.createElement('p');
-    pPergunta.textContent = resposta.pergunta;
-    divResposta.appendChild(pPergunta);
-
     const pResposta = document.createElement('p');
     pResposta.textContent = `Resposta: ${resposta.resposta}`;
     pResposta.classList.add(resposta.correta ? 'correcta' : 'incorrecta');
