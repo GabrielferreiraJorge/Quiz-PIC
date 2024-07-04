@@ -48,7 +48,6 @@ button#botaoAvancar.enabled {
   box-shadow: 0 0 10px 5px rgba(110, 0, 110, 0.3), 0 0 15px 10px rgba(187, 15, 164, 0.8);
 }
 
-
 button#botaoAvancar.disabled {
   background-color: grey;
   color: darkgrey;
@@ -90,6 +89,7 @@ input[type="text"] {
 
 #perguntas div input[type="radio"] {
   margin-top: 10px;
+  size: 10px;
 }
 
 #perguntas div {
