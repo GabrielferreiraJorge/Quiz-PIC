@@ -21,7 +21,7 @@ body {
   box-shadow: 0 0 10px 5px rgba(81, 0, 128, 0.3), 0 0 15px 10px rgba(215, 15, 255, 0.8);
 }
 
-button {
+#iniciar {
   width: 150px;
   padding: 10px;
   margin-top: 20px;
@@ -35,9 +35,21 @@ button {
   box-shadow: 0 0 10px 5px rgba(110, 0, 110, 0.3), 0 0 15px 10px rgba(187, 15, 164, 0.8);
 }
 
-button:hover {
+#iniciar:hover {
   background-color: rgb(3, 142, 223);
   box-shadow: 0 4px 10px rgba(110, 0, 110, 0.3);
+}
+
+button#botaoAvancar.enabled {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+button#botaoAvancar.disabled {
+  background-color: grey;
+  color: darkgrey;
+  cursor: not-allowed;
 }
 
 

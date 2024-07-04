@@ -133,9 +133,6 @@ function validarTurma(turma) {
   return /^(0?[1-9]|[1-9][0-9])[-]?[A-Ea-e]$/.test(turma.trim());
 }
 
-
-
-
 function exibirPergunta(indicePergunta) {
   if (indicePergunta >= perguntas.length) {
       finalizarQuiz();
@@ -185,8 +182,7 @@ function verificarResposta(inputSelecionado) {
   if (respostaSelecionada === respostaCorreta) {
       pontuacao++;
   }
-
-  document.getElementById('botaoAvancar').disabled = false;
+  habilitarBotaoAvancar();
 }
 
 function mostrarFeedback(mensagem, isCorrect) {
@@ -199,11 +195,26 @@ document.getElementById('botaoAvancar').addEventListener('click', () => {
   indicePerguntaAtual++;
   if (indicePerguntaAtual < perguntas.length) {
     exibirPergunta(indicePerguntaAtual);
-    document.getElementById('botaoAvancar').disabled = true;
+    desabilitarBotaoAvancar();
   } else {
     finalizarQuiz();
   }
 });
+
+function desabilitarBotaoAvancar(){
+  const botaoAvancar = document.getElementById('botaoAvancar');
+  botaoAvancar.disabled = true;
+  botaoAvancar.classList.remove('enabled');
+  botaoAvancar.classList.add('disabled');
+}
+
+function habilitarBotaoAvancar(){
+  const botaoAvancar = document.getElementById('botaoAvancar');
+  botaoAvancar.disabled = false;
+  botaoAvancar.classList.remove('disabled');
+  botaoAvancar.classList.add('enabled');
+}
+
 
 function finalizarQuiz() {
   document.getElementById('quiz').style.display = 'none';
@@ -238,6 +249,3 @@ document.getElementById('reiniciar').addEventListener('click', () => {
   document.getElementById('resultado').style.display = 'none';
   document.getElementById('inicio').style.display = 'block';
 });
-
-
-
