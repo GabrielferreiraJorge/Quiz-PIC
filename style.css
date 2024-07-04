@@ -16,12 +16,11 @@ body {
   background-color: rgb(143, 15, 143);
   border-radius: 10px;
   max-width: 500px;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin: 0 50px;
   box-shadow: 0 0 10px 5px rgba(81, 0, 128, 0.3), 0 0 15px 10px rgba(215, 15, 255, 0.8);
 }
 
-#iniciar {
+button {
   width: 150px;
   padding: 10px;
   margin-top: 20px;
@@ -35,20 +34,11 @@ body {
   box-shadow: 0 0 10px 5px rgba(110, 0, 110, 0.3), 0 0 15px 10px rgba(187, 15, 164, 0.8);
 }
 
-#iniciar:hover {
+button:hover {
   background-color: rgb(3, 142, 223);
-  box-shadow: 0 4px 10px rgba(110, 0, 110, 0.3);
 }
 
-button#botaoAvancar.enabled {
-  background-color: rgb(5, 164, 238);
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  box-shadow: 0 0 10px 5px rgba(110, 0, 110, 0.3), 0 0 15px 10px rgba(187, 15, 164, 0.8);
-}
-
-button#botaoAvancar.disabled {
+button.disabled {
   background-color: grey;
   color: darkgrey;
   cursor: not-allowed;
@@ -97,23 +87,12 @@ input[type="text"] {
   border-radius: 5px;
 }
 
-#botaoAvancar {
-  margin-top: 20px;
-  width: 150px;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
 #botaoAvancar-container {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-/* Botão de reiniciar e tentar novamente com o mesmo estilo do botão de avançar */
 button#reiniciar, button#tentarNovamente {
   width: 100px;
   padding: 15px;
@@ -130,7 +109,6 @@ button#reiniciar:hover, button#tentarNovamente:hover {
   background-color: rgb(3, 142, 223);
 }
 
-/* Estilos para a palavra "pergunta" */
 .correcta {
   color: white;
   background-color: green;

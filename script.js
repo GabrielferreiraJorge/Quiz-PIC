@@ -124,45 +124,36 @@ function iniciarQuiz() {
 }
 
 function validarNome(nome) {
-  // Permite letras, espaços e acentos, de 2 a 50 caracteres
-  const regexNome = /^[A-Za-zÀ-ÿ\s]{2,50}$/;
-  return regexNome.test(nome.trim());
+  return /^[A-Za-zÀ-ÿ\s]{2,50}$/.test(nome.trim());
 }
 
 function validarTurma(turma) {
-  // Permite números de 1 a 99, opcional hífen, e letras de 'A' até 'E'
   return /^(0?[1-9]|[1-9][0-9])[-]?[A-Ea-e]$/.test(turma.trim());
 }
 
 function exibirPergunta(indicePergunta) {
   if (indicePergunta >= perguntas.length) {
-      finalizarQuiz();
-      return;
+    finalizarQuiz();
+    return;
   }
 
   const divPerguntas = document.getElementById('perguntas');
   divPerguntas.innerHTML = '';
 
   const perguntaAtual = perguntas[indicePergunta];
-  const textoPergunta = perguntaAtual.pergunta;
-  const alternativas = perguntaAtual.alternativas;
-
   const divPergunta = document.createElement('div');
   const h2Pergunta = document.createElement('h2');
-  h2Pergunta.textContent = textoPergunta;
+  h2Pergunta.textContent = perguntaAtual.pergunta;
   divPergunta.appendChild(h2Pergunta);
 
-  alternativas.forEach((alternativa, i) => {
+  perguntaAtual.alternativas.forEach((alternativa, i) => {
     const divAlternativa = document.createElement('div');
     const inputRadio = document.createElement('input');
     inputRadio.type = 'radio';
     inputRadio.id = `alternativa-${i}`;
     inputRadio.name = 'alternativa';
     inputRadio.value = alternativa;
-
-    inputRadio.addEventListener('click', () => {
-      verificarResposta(inputRadio);
-    });
+    inputRadio.addEventListener('click', () => verificarResposta(inputRadio));
 
     const labelAlternativa = document.createElement('label');
     labelAlternativa.textContent = alternativa;
@@ -183,7 +174,7 @@ function verificarResposta(inputSelecionado) {
 
   const respostaCorretaOuNao = respostaSelecionada === respostaCorreta;
   if (respostaCorretaOuNao) {
-      pontuacao++;
+    pontuacao++;
   }
 
   respostasUsuario.push({
@@ -197,77 +188,76 @@ function verificarResposta(inputSelecionado) {
 
 document.getElementById('botaoAvancar').addEventListener('click', () => {
   indicePerguntaAtual++;
-  if (indicePerguntaAtual < perguntas.length) {
-    exibirPergunta(indicePerguntaAtual);
-    desabilitarBotaoAvancar();
-  } else {
-    finalizarQuiz();
-  }
-});
-
-function desabilitarBotaoAvancar(){
-  const botaoAvancar = document.getElementById('botaoAvancar');
-  botaoAvancar.disabled = true;
-  botaoAvancar.classList.remove('enabled');
-  botaoAvancar.classList.add('disabled');
-}
-
-function habilitarBotaoAvancar(){
-  const botaoAvancar = document.getElementById('botaoAvancar');
-  botaoAvancar.disabled = false;
-  botaoAvancar.classList.remove('disabled');
-  botaoAvancar.classList.add('enabled');
-}
-
-function finalizarQuiz() {
-  document.getElementById('quiz').style.display = 'none';
-  const feedbackDiv = document.getElementById('resultado');
-  const mensagemFinal = document.getElementById('mensagemFinal');
-  
-  mensagemFinal.textContent = `Você acertou ${pontuacao} de ${perguntas.length} perguntas.\n`;
-
-  const listaRespostas = document.createElement('ul');
-  respostasUsuario.forEach(resposta => {
-    const itemLista = document.createElement('li');
-    const spanPergunta = document.createElement('span');
-    spanPergunta.textContent = `Pergunta: `;
-    spanPergunta.classList.add(resposta.correta ? 'correcta' : 'incorrecta');
-    
-    itemLista.appendChild(spanPergunta);
-    itemLista.appendChild(document.createTextNode(`${resposta.pergunta} - ${resposta.correta ? 'Correta' : 'Errada'}`));
-    listaRespostas.appendChild(itemLista);
-  });
-
-  mensagemFinal.appendChild(listaRespostas);
-  
-  if (pontuacao / perguntas.length >= 0.7) {
-    mensagemFinal.textContent += ` Parabéns, seu total de acertos é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
-    confetti({
-      particleCount: 150,
-      spread: 180,
-      origin: { y: 0.6 }
-    });
-  }
-
-  feedbackDiv.style.display = 'block';
-}
-
-
-document.getElementById('tentarNovamente').addEventListener('click', () => {
-  indicePerguntaAtual = 0;
-  pontuacao = 0;
-  respostasUsuario = [];
-  document.getElementById('resultado').style.display = 'none';
-  document.getElementById('quiz').style.display = 'block';
   exibirPergunta(indicePerguntaAtual);
   desabilitarBotaoAvancar();
 });
 
 document.getElementById('reiniciar').addEventListener('click', () => {
-  indicePerguntaAtual = 0;
+  location.reload();
+});
+
+document.getElementById('tentarNovamente').addEventListener('click', () => {
   pontuacao = 0;
+  indicePerguntaAtual = 0;
   respostasUsuario = [];
   document.getElementById('resultado').style.display = 'none';
-  document.getElementById('inicio').style.display = 'block';
-  desabilitarBotaoAvancar();
+  document.getElementById('quiz').style.display = 'block';
+  exibirPergunta(indicePerguntaAtual);
 });
+
+function habilitarBotaoAvancar() {
+  const botaoAvancar = document.getElementById('botaoAvancar');
+  botaoAvancar.classList.remove('disabled');
+  botaoAvancar.disabled = false;
+}
+
+function desabilitarBotaoAvancar() {
+  const botaoAvancar = document.getElementById('botaoAvancar');
+  botaoAvancar.classList.add('disabled');
+  botaoAvancar.disabled = true;
+}
+
+function finalizarQuiz() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('resultado').style.display = 'block';
+
+  const mensagemFinal = document.getElementById('mensagemFinal');
+  const resultadoHTML = `Parabéns ${nome}, você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
+  mensagemFinal.textContent = resultadoHTML;
+
+  const divRespostas = document.getElementById('respostas');
+  divRespostas.innerHTML = '';
+
+  respostasUsuario.forEach(resposta => {
+    const divResposta = document.createElement('div');
+    const pPergunta = document.createElement('p');
+    pPergunta.textContent = resposta.pergunta;
+    divResposta.appendChild(pPergunta);
+
+    const pResposta = document.createElement('p');
+    pResposta.textContent = `Resposta: ${resposta.resposta}`;
+    pResposta.classList.add(resposta.correta ? 'correcta' : 'incorrecta');
+    divResposta.appendChild(pResposta);
+
+    divRespostas.appendChild(divResposta);
+  });
+
+  const confettiDuration = 15 * 1000;
+  const confettiEnd = Date.now() + confettiDuration;
+  const confettiColors = ['#ff00ff', '#00ff00', '#800080'];
+  
+  const confettiInterval = setInterval(function() {
+    const timeLeft = confettiEnd - Date.now();
+  
+    if (timeLeft <= 0) {
+      return clearInterval(confettiInterval);
+    }
+  
+    const particleCount = 50 * (timeLeft / confettiDuration);
+    confetti({
+      particleCount,
+      origin: { x: Math.random(), y: Math.random() - 0.2 },
+      colors: confettiColors
+    });
+  }, 250);
+}
