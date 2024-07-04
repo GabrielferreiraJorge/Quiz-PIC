@@ -172,16 +172,19 @@ function verificarResposta(inputSelecionado) {
   const respostaSelecionada = inputSelecionado.value;
   const respostaCorreta = perguntas[indicePerguntaAtual].respostaCorreta;
 
-  const respostaCorretaOuNao = respostaSelecionada === respostaCorreta;
-  if (respostaCorretaOuNao) {
-    pontuacao++;
-  }
-
   respostasUsuario.push({
     pergunta: perguntas[indicePerguntaAtual].pergunta,
     resposta: respostaSelecionada,
-    correta: respostaCorretaOuNao
+    correta: respostaSelecionada === respostaCorreta
   });
+
+  const divFeedback = document.getElementById('feedback');
+  if (respostaSelecionada === respostaCorreta) {
+    divFeedback.textContent = 'Correto!';
+    pontuacao++;
+  } else {
+    divFeedback.textContent = `Incorreto! A resposta correta é: ${respostaCorreta}`;
+  }
 
   habilitarBotaoAvancar();
 }
@@ -228,8 +231,13 @@ function finalizarQuiz() {
   const divRespostas = document.getElementById('respostas');
   divRespostas.innerHTML = '';
 
-  respostasUsuario.forEach(resposta => {
+  respostasUsuario.forEach((resposta, indice) => {
     const divResposta = document.createElement('div');
+    
+    const pIndice = document.createElement('p');
+    pIndice.textContent = `Pergunta ${indice + 1}:`;
+    divResposta.appendChild(pIndice);
+
     const pResposta = document.createElement('p');
     pResposta.textContent = `Resposta: ${resposta.resposta}`;
     pResposta.classList.add(resposta.correta ? 'correcta' : 'incorrecta');
