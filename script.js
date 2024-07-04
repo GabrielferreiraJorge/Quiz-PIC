@@ -104,7 +104,7 @@ const perguntas = [
 let indicePerguntaAtual = 0;
 let pontuacao = 0;
 let nome = '';
-let respostas = [];
+let respostasUsuario = [];
 
 function iniciarQuiz() {
   const nomeInput = document.getElementById('nome');
@@ -181,27 +181,18 @@ function verificarResposta(inputSelecionado) {
   const respostaSelecionada = inputSelecionado.value;
   const respostaCorreta = perguntas[indicePerguntaAtual].respostaCorreta;
 
-  if (respostaSelecionada === respostaCorreta) {
-    pontuacao++;
-    respostas.push({
-      pergunta: perguntas[indicePerguntaAtual].pergunta,
-      resposta: respostaSelecionada,
-      correta: true
-    });
-  } else {
-    respostas.push({
-      pergunta: perguntas[indicePerguntaAtual].pergunta,
-      resposta: respostaSelecionada,
-      correta: false
-    });
+  const respostaCorretaOuNao = respostaSelecionada === respostaCorreta;
+  if (respostaCorretaOuNao) {
+      pontuacao++;
   }
-  habilitarBotaoAvancar();
-}
 
-function mostrarFeedback(mensagem, isCorrect) {
-  const feedbackDiv = document.getElementById('feedback');
-  feedbackDiv.textContent = mensagem;
-  feedbackDiv.className = isCorrect ? 'feedback-correct' : 'feedback-wrong';
+  respostasUsuario.push({
+    pergunta: perguntas[indicePerguntaAtual].pergunta,
+    resposta: respostaSelecionada,
+    correta: respostaCorretaOuNao
+  });
+
+  habilitarBotaoAvancar();
 }
 
 document.getElementById('botaoAvancar').addEventListener('click', () => {
@@ -233,33 +224,33 @@ function finalizarQuiz() {
   const feedbackDiv = document.getElementById('resultado');
   const mensagemFinal = document.getElementById('mensagemFinal');
   
-  mensagemFinal.textContent = `Você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
+  mensagemFinal.textContent = `Você acertou ${pontuacao} de ${perguntas.length} perguntas.\n`;
+
+  const listaRespostas = document.createElement('ul');
+  respostasUsuario.forEach(resposta => {
+    const itemLista = document.createElement('li');
+    itemLista.textContent = `Pergunta: ${resposta.pergunta} - ${resposta.correta ? 'Correta' : 'Errada'}`;
+    listaRespostas.appendChild(itemLista);
+  });
+
+  mensagemFinal.appendChild(listaRespostas);
   
   if (pontuacao / perguntas.length >= 0.7) {
-      mensagemFinal.textContent += ` Parabéns, seu total de acertos é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
-      confetti({
-          particleCount: 150,
-          spread: 180,
-          origin: { y: 0.6 }
-      });
+    mensagemFinal.textContent += ` Parabéns, seu total de acertos é de ${(pontuacao / perguntas.length * 100).toFixed(0)}% do conhecimento aplicado.`;
+    confetti({
+      particleCount: 150,
+      spread: 180,
+      origin: { y: 0.6 }
+    });
   }
 
-  const divRespostas = document.getElementById('respostas');
-  divRespostas.innerHTML = '';
-  
-  respostas.forEach(res => {
-    const divResposta = document.createElement('div');
-    divResposta.textContent = `- Sua resposta: ${res.resposta} - ${res.correta ? 'Correta' : 'Incorreta'}`;
-    divRespostas.appendChild(divResposta);
-  });
-  
   feedbackDiv.style.display = 'block';
 }
 
 document.getElementById('tentarNovamente').addEventListener('click', () => {
   indicePerguntaAtual = 0;
   pontuacao = 0;
-  respostas = [];
+  respostasUsuario = [];
   document.getElementById('resultado').style.display = 'none';
   document.getElementById('quiz').style.display = 'block';
   exibirPergunta(indicePerguntaAtual);
@@ -269,7 +260,7 @@ document.getElementById('tentarNovamente').addEventListener('click', () => {
 document.getElementById('reiniciar').addEventListener('click', () => {
   indicePerguntaAtual = 0;
   pontuacao = 0;
-  respostas = [];
+  respostasUsuario = [];
   document.getElementById('resultado').style.display = 'none';
   document.getElementById('inicio').style.display = 'block';
   desabilitarBotaoAvancar();
