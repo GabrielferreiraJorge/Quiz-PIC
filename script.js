@@ -249,7 +249,7 @@ function finalizarQuiz() {
   
   respostas.forEach(res => {
     const divResposta = document.createElement('div');
-    divResposta.textContent = `${res.pergunta} - Sua resposta: ${res.resposta} - ${res.correta ? 'Correta' : 'Incorreta'}`;
+    divResposta.textContent = `- Sua resposta: ${res.resposta} - ${res.correta ? 'Correta' : 'Incorreta'}`;
     divRespostas.appendChild(divResposta);
   });
   
