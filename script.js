@@ -229,7 +229,12 @@ function finalizarQuiz() {
   const listaRespostas = document.createElement('ul');
   respostasUsuario.forEach(resposta => {
     const itemLista = document.createElement('li');
-    itemLista.textContent = `Pergunta: ${resposta.pergunta} - ${resposta.correta ? 'Correta' : 'Errada'}`;
+    const spanPergunta = document.createElement('span');
+    spanPergunta.textContent = `Pergunta: `;
+    spanPergunta.classList.add(resposta.correta ? 'correcta' : 'incorrecta');
+    
+    itemLista.appendChild(spanPergunta);
+    itemLista.appendChild(document.createTextNode(`${resposta.pergunta} - ${resposta.correta ? 'Correta' : 'Errada'}`));
     listaRespostas.appendChild(itemLista);
   });
 
@@ -246,6 +251,7 @@ function finalizarQuiz() {
 
   feedbackDiv.style.display = 'block';
 }
+
 
 document.getElementById('tentarNovamente').addEventListener('click', () => {
   indicePerguntaAtual = 0;
