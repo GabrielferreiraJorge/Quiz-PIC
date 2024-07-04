@@ -242,6 +242,7 @@ document.getElementById('tentarNovamente').addEventListener('click', () => {
   document.getElementById('resultado').style.display = 'none';
   document.getElementById('quiz').style.display = 'block';
   exibirPergunta(indicePerguntaAtual);
+  desabilitarBotaoAvancar();
 });
 
 document.getElementById('reiniciar').addEventListener('click', () => {
@@ -249,4 +250,5 @@ document.getElementById('reiniciar').addEventListener('click', () => {
   pontuacao = 0;
   document.getElementById('resultado').style.display = 'none';
   document.getElementById('inicio').style.display = 'block';
+  desabilitarBotaoAvancar();
 });

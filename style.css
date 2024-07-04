@@ -84,7 +84,8 @@ input[type="text"] {
 #quiz {
   display: flex;
   flex-direction: column;
-  align-items: justify;
+  align-items: center;
+  text-align: justify;
 }
 
 #perguntas div input[type="radio"] {
