@@ -7,8 +7,8 @@
 </head>
 <body>
   <main>
-  <div id="fundo">
-    <h1>Quiz Pic</h1>
+    <div id="fundo">
+      <h1>Quiz Pic</h1>
       <section id="inicio">
         <label for="nome">Nome Completo:</label>
         <input type="text" id="nome" name="nome">
@@ -22,7 +22,9 @@
       <section id="quiz" style="display: none;">
         <section id="perguntas"></section>
         <section id="feedback" role="alert" aria-live="assertive"></section>
-        <button type="button" id="botaoAvancar" class="disabled" disabled>Avançar</button> <!-- Botão Avançar -->
+        <div id="botaoAvancar-container">
+          <button type="button" id="botaoAvancar" class="disabled" disabled>Avançar</button>
+        </div>
       </section>
 
       <section id="resultado" style="display: none;">
@@ -30,9 +32,8 @@
         <button type="button" id="tentarNovamente">Tentar Novamente</button>
         <button type="button" id="reiniciar">Finalizar</button>
       </section>
-  </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.min.js"></script>
-
   </main>
   <script src="script.js" defer></script>
 </body>
