@@ -153,6 +153,7 @@ function exibirPergunta(indicePergunta) {
     inputRadio.id = `alternativa-${i}`;
     inputRadio.name = 'alternativa';
     inputRadio.value = alternativa;
+    inputRadio.addEventListener('change', () => verificarResposta(inputRadio));
 
     const labelAlternativa = document.createElement('label');
     labelAlternativa.textContent = alternativa;
@@ -187,10 +188,14 @@ function verificarResposta(inputSelecionado) {
 
 function avancarPergunta() {
   indicePerguntaAtual++;
-  exibirPergunta(indicePerguntaAtual);
-  if (indicePerguntaAtual === perguntas.length - 1) {
-    const botaoAvancar = document.getElementById('botaoAvancar');
-    botaoAvancar.textContent = 'Finalizar Quiz';
+  if (indicePerguntaAtual < perguntas.length) {
+    exibirPergunta(indicePerguntaAtual);
+    if (indicePerguntaAtual === perguntas.length - 1) {
+      const botaoAvancar = document.getElementById('botaoAvancar');
+      botaoAvancar.textContent = 'Finalizar Quiz';
+    }
+  } else {
+    finalizarQuiz();
   }
 }
 
