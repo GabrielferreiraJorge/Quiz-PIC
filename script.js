@@ -187,9 +187,6 @@ function verificarResposta(inputSelecionado) {
   habilitarBotaoAvancar();
 }
 
-
-
-
 function avancarPergunta() {
   indicePerguntaAtual++;
   if (indicePerguntaAtual < perguntas.length) {
@@ -225,8 +222,12 @@ function exibirResultado() {
   mensagemFinal.textContent = `${nome}, você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
 
   const divRespostas = document.getElementById('respostas');
+  divRespostas.innerHTML = '';
+
   respostasUsuario.forEach((resposta, indice) => {
     const divResposta = document.createElement('div');
+    divResposta.classList.add(resposta === perguntas[indice].respostaCorreta ? 'correcta' : 'incorrecta');
+
     const numeroPergunta = document.createElement('span');
     numeroPergunta.textContent = `Pergunta ${indice + 1}: `;
     divResposta.appendChild(numeroPergunta);
@@ -235,14 +236,6 @@ function exibirResultado() {
     textoResposta.textContent = resposta;
     divResposta.appendChild(textoResposta);
 
-    // Comparar com a resposta correta e aplicar classe correta/incorreta
-    const respostaCorreta = perguntas[indice].respostaCorreta;
-    if (resposta === respostaCorreta) {
-      divResposta.classList.add('correcta');
-    } else {
-      divResposta.classList.add('incorrecta');
-    }
-
     divRespostas.appendChild(divResposta);
   });
 
@@ -250,7 +243,6 @@ function exibirResultado() {
   botaoTentarNovamente.addEventListener('click', reiniciarQuiz);
 
   const botaoReiniciar = document.getElementById('reiniciar');
-  botaoReiniciar.textContent = 'Reiniciar Quiz';
   botaoReiniciar.addEventListener('click', reiniciarQuiz);
 }
 

@@ -21,15 +21,19 @@
 
     <div id="quiz" style="display: none;">
       <div id="perguntas"></div>
-      <button id="botaoAvancar" class="disabled" disabled onclick="avancarPergunta()">Avançar</button>
+      <div id="botaoAvancar-container">
+        <button id="botaoAvancar" class="disabled" disabled onclick="avancarPergunta()">Avançar</button>
+      </div>
     </div>
 
     <div id="resultado" style="display: none;">
       <h2>Resultado do Quiz</h2>
       <p id="mensagemFinal"></p>
       <div id="respostas"></div>
-      <button id="tentarNovamente">Tentar Novamente</button>
-      <button id="reiniciar">Reiniciar Quiz</button>
+      <div id="botoesResultado">
+        <button id="tentarNovamente">Tentar Novamente</button>
+        <button id="reiniciar">Reiniciar Quiz</button>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>
