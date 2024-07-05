@@ -101,6 +101,7 @@ const perguntas = [
   }
 ];
 
+
 let indicePerguntaAtual = 0;
 let pontuacao = 0;
 let nome = '';
