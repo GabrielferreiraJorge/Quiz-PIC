@@ -153,7 +153,6 @@ function exibirPergunta(indicePergunta) {
     inputRadio.id = `alternativa-${i}`;
     inputRadio.name = 'alternativa';
     inputRadio.value = alternativa;
-    inputRadio.addEventListener('click', () => verificarResposta(inputRadio));
 
     const labelAlternativa = document.createElement('label');
     labelAlternativa.textContent = alternativa;
@@ -168,45 +167,11 @@ function exibirPergunta(indicePergunta) {
   desabilitarBotaoAvancar();
 }
 
-function verificarResposta(inputSelecionado) {
-  const respostaSelecionada = inputSelecionado.value;
-  const respostaCorreta = perguntas[indicePerguntaAtual].respostaCorreta;
-
-  respostasUsuario.push({
-    pergunta: perguntas[indicePerguntaAtual].pergunta,
-    resposta: respostaSelecionada,
-    correta: respostaSelecionada === respostaCorreta
-  });
-
-  const divFeedback = document.getElementById('feedback');
-  if (respostaSelecionada === respostaCorreta) {
-    divFeedback.textContent = 'Correto!';
-    pontuacao++;
-  } else {
-    divFeedback.textContent = `Incorreto! A resposta correta é: ${respostaCorreta}`;
-  }
-
-  habilitarBotaoAvancar();
+function desabilitarBotaoAvancar() {
+  const botaoAvancar = document.getElementById('botaoAvancar');
+  botaoAvancar.classList.add('disabled');
+  botaoAvancar.disabled = true;
 }
-
-document.getElementById('botaoAvancar').addEventListener('click', () => {
-  indicePerguntaAtual++;
-  exibirPergunta(indicePerguntaAtual);
-  desabilitarBotaoAvancar();
-});
-
-document.getElementById('reiniciar').addEventListener('click', () => {
-  location.reload();
-});
-
-document.getElementById('tentarNovamente').addEventListener('click', () => {
-  pontuacao = 0;
-  indicePerguntaAtual = 0;
-  respostasUsuario = [];
-  document.getElementById('resultado').style.display = 'none';
-  document.getElementById('quiz').style.display = 'block';
-  exibirPergunta(indicePerguntaAtual);
-});
 
 function habilitarBotaoAvancar() {
   const botaoAvancar = document.getElementById('botaoAvancar');
@@ -214,54 +179,75 @@ function habilitarBotaoAvancar() {
   botaoAvancar.disabled = false;
 }
 
-function desabilitarBotaoAvancar() {
-  const botaoAvancar = document.getElementById('botaoAvancar');
-  botaoAvancar.classList.add('disabled');
-  botaoAvancar.disabled = true;
+function verificarResposta(inputSelecionado) {
+  const respostaSelecionada = inputSelecionado.value;
+  respostasUsuario[indicePerguntaAtual] = respostaSelecionada;
+  habilitarBotaoAvancar();
+}
+
+function avancarPergunta() {
+  indicePerguntaAtual++;
+  exibirPergunta(indicePerguntaAtual);
+  if (indicePerguntaAtual === perguntas.length - 1) {
+    const botaoAvancar = document.getElementById('botaoAvancar');
+    botaoAvancar.textContent = 'Finalizar Quiz';
+  }
 }
 
 function finalizarQuiz() {
+  calcularPontuacao();
+  exibirResultado();
+}
+
+function calcularPontuacao() {
+  pontuacao = 0;
+  perguntas.forEach((pergunta, indice) => {
+    if (pergunta.respostaCorreta === respostasUsuario[indice]) {
+      pontuacao++;
+    }
+  });
+}
+
+function exibirResultado() {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('resultado').style.display = 'block';
 
   const mensagemFinal = document.getElementById('mensagemFinal');
-  const resultadoHTML = `Parabéns ${nome}, você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
-  mensagemFinal.textContent = resultadoHTML;
+  mensagemFinal.textContent = `${nome}, você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
 
   const divRespostas = document.getElementById('respostas');
-  divRespostas.innerHTML = '';
-
   respostasUsuario.forEach((resposta, indice) => {
     const divResposta = document.createElement('div');
-    
-    const pIndice = document.createElement('p');
-    pIndice.textContent = `Pergunta ${indice + 1}:`;
-    divResposta.appendChild(pIndice);
+    const numeroPergunta = document.createElement('span');
+    numeroPergunta.textContent = `Pergunta ${indice + 1}: `;
+    divResposta.appendChild(numeroPergunta);
 
-    const pResposta = document.createElement('p');
-    pResposta.textContent = `Resposta: ${resposta.resposta}`;
-    pResposta.classList.add(resposta.correta ? 'correcta' : 'incorrecta');
-    divResposta.appendChild(pResposta);
+    const textoResposta = document.createElement('span');
+    textoResposta.textContent = resposta;
+    divResposta.appendChild(textoResposta);
 
     divRespostas.appendChild(divResposta);
   });
 
-  const confettiDuration = 15 * 1000;
-  const confettiEnd = Date.now() + confettiDuration;
-  const confettiColors = ['#ff00ff', '#00ff00', '#800080'];
-  
-  const confettiInterval = setInterval(function() {
-    const timeLeft = confettiEnd - Date.now();
-  
-    if (timeLeft <= 0) {
-      return clearInterval(confettiInterval);
-    }
-  
-    const particleCount = 50 * (timeLeft / confettiDuration);
-    confetti({
-      particleCount,
-      origin: { x: Math.random(), y: Math.random() - 0.2 },
-      colors: confettiColors
-    });
-  }, 250);
+  const botaoTentarNovamente = document.getElementById('tentarNovamente');
+  botaoTentarNovamente.addEventListener('click', reiniciarQuiz);
+
+  const botaoReiniciar = document.getElementById('reiniciar');
+  botaoReiniciar.textContent = 'Reiniciar Quiz';
+  botaoReiniciar.addEventListener('click', reiniciarQuiz);
+}
+
+function reiniciarQuiz() {
+  indicePerguntaAtual = 0;
+  pontuacao = 0;
+  respostasUsuario = [];
+  nome = '';
+
+  document.getElementById('resultado').style.display = 'none';
+  document.getElementById('inicio').style.display = 'block';
+  document.getElementById('nome').value = '';
+  document.getElementById('turma').value = '';
+
+  const botaoAvancar = document.getElementById('botaoAvancar');
+  botaoAvancar.textContent = 'Avançar';
 }
