@@ -184,27 +184,10 @@ function habilitarBotaoAvancar() {
 function verificarResposta(inputSelecionado) {
   const respostaSelecionada = inputSelecionado.value;
   respostasUsuario[indicePerguntaAtual] = respostaSelecionada;
-
-  const perguntaAtual = perguntas[indicePerguntaAtual];
-  const alternativas = Array.from(inputSelecionado.parentNode.parentNode.querySelectorAll('input[type="radio"]'));
-
-  alternativas.forEach(input => {
-    const label = input.nextElementSibling;
-    if (input.value === perguntaAtual.respostaCorreta) {
-      label.classList.remove('correcta', 'incorrecta');
-      if (input.checked) {
-        label.classList.add('correcta');
-      }
-    } else {
-      label.classList.remove('correcta', 'incorrecta');
-      if (input.checked) {
-        label.classList.add('incorrecta');
-      }
-    }
-  });
-
   habilitarBotaoAvancar();
 }
+
+
 
 
 function avancarPergunta() {
@@ -251,6 +234,14 @@ function exibirResultado() {
     const textoResposta = document.createElement('span');
     textoResposta.textContent = resposta;
     divResposta.appendChild(textoResposta);
+
+    // Comparar com a resposta correta e aplicar classe correta/incorreta
+    const respostaCorreta = perguntas[indice].respostaCorreta;
+    if (resposta === respostaCorreta) {
+      divResposta.classList.add('correcta');
+    } else {
+      divResposta.classList.add('incorrecta');
+    }
 
     divRespostas.appendChild(divResposta);
   });
