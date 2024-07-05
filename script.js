@@ -184,8 +184,28 @@ function habilitarBotaoAvancar() {
 function verificarResposta(inputSelecionado) {
   const respostaSelecionada = inputSelecionado.value;
   respostasUsuario[indicePerguntaAtual] = respostaSelecionada;
+
+  const perguntaAtual = perguntas[indicePerguntaAtual];
+  const alternativas = Array.from(inputSelecionado.parentNode.parentNode.querySelectorAll('input[type="radio"]'));
+
+  alternativas.forEach(input => {
+    const label = input.nextElementSibling;
+    if (input.value === perguntaAtual.respostaCorreta) {
+      label.classList.remove('correcta', 'incorrecta');
+      if (input.checked) {
+        label.classList.add('correcta');
+      }
+    } else {
+      label.classList.remove('correcta', 'incorrecta');
+      if (input.checked) {
+        label.classList.add('incorrecta');
+      }
+    }
+  });
+
   habilitarBotaoAvancar();
 }
+
 
 function avancarPergunta() {
   indicePerguntaAtual++;

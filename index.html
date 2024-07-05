@@ -7,30 +7,31 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="inicio">
-    <h1>Bem-vindo ao Quiz sobre Materiais Concretos</h1>
-    <form onsubmit="return false;">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" required><br><br>
-      <label for="turma">Turma:</label>
-      <input type="text" id="turma" required><br><br>
-      <button onclick="iniciarQuiz()">Iniciar Quiz</button>
-    </form>
-  </div>
+  <div id="fundo">
+    <div id="inicio">
+      <h1>Bem-vindo ao Quiz sobre Materiais Concretos</h1>
+      <form onsubmit="return false;">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required><br><br>
+        <label for="turma">Turma:</label>
+        <input type="text" id="turma" required><br><br>
+        <button onclick="iniciarQuiz()">Iniciar Quiz</button>
+      </form>
+    </div>
 
-  <div id="quiz" style="display: none;">
-    <div id="perguntas"></div>
-    <button id="botaoAvancar" class="disabled" disabled onclick="avancarPergunta()">Avançar</button>
-  </div>
+    <div id="quiz" style="display: none;">
+      <div id="perguntas"></div>
+      <button id="botaoAvancar" class="disabled" disabled onclick="avancarPergunta()">Avançar</button>
+    </div>
 
-  <div id="resultado" style="display: none;">
-    <h2>Resultado do Quiz</h2>
-    <p id="mensagemFinal"></p>
-    <div id="respostas"></div>
-    <button id="tentarNovamente">Tentar Novamente</button>
-    <button id="reiniciar">Reiniciar Quiz</button>
+    <div id="resultado" style="display: none;">
+      <h2>Resultado do Quiz</h2>
+      <p id="mensagemFinal"></p>
+      <div id="respostas"></div>
+      <button id="tentarNovamente">Tentar Novamente</button>
+      <button id="reiniciar">Reiniciar Quiz</button>
+    </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
